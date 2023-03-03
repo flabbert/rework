@@ -1,0 +1,8 @@
+docker-compose.yml
+.env
+.env.example
+.git
+.vscode
+azure-pipelines.yml
+.editorconfig
+src/node_modules
