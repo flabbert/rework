@@ -12,9 +12,8 @@
     "analyze": "nuxt analyze",
     "eslint": "eslint --ext .js,.vue,.ts --ignore-path ../.gitignore .",
     "eslint:fix": "eslint --ext .js,.vue,.ts --ignore-path ../.gitignore . --fix",
-    "story:dev": "histoire dev",
-    "story:build": "histoire build",
-    "story:preview": "histoire preview"
+    "storybook": "previewjs",
+    "story:dev": "previewjs"
   },
   "dependencies": {
     "@microsoft/applicationinsights-web": "2.8.10",
@@ -28,17 +27,16 @@
     "nuxt-icons": "3.1.0",
     "pinia": "2.0.32",
     "tailwind": "4.0.0",
+    "vue": "^3.2.47",
     "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
-    "@histoire/plugin-vue": "^0.15.8",
-    "@histoire/plugin-nuxt": "0.15.8",
     "@novicell/eslint-config-nuxt": "0.2.5",
     "@nuxt/devtools": "0.2.5",
     "@previewjs/cli": "^1.17.4",
     "@typescript-eslint/parser": "^5.54.0",
+    "previewjs": "1.0.6",
     "@vue/cli": "^5.0.8",
-    "histoire": "^0.15.8",
     "eslint": "8.35.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -52,7 +50,6 @@
     "typescript": "^4.9.5",
     "vite": "4.1.4",
     "vitest": "0.29.2",
-    "vue": "^3.2.47",
     "vue-eslint-parser": "^9.1.0"
   }
 }

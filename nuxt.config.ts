@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { fileURLToPath } from 'url';
 import path from 'path';
 import { defineNuxtConfig } from 'nuxt/config';
 

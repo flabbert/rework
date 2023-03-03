@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  frontend:
+    image: novicell-nuxt3-boilerplate
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+      - "2222:2222"
+    env_file:
+      - .env

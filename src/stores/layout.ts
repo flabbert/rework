@@ -1,4 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
+import { ref } from 'vue';
 
 export const useLayout = defineStore('layout', () => {
   const scrollLockEnabled = ref<boolean>(false);

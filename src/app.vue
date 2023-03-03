@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { Ref } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useLayout } from './stores/layout';
 
 const layoutStore = useLayout();

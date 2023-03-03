@@ -1,11 +1,31 @@
-FROM nginx:1.22.1-alpine
+#############################################
+##Build Step
+#############################################
+FROM node:lts-alpine AS build
+
+# Install node
+WORKDIR /usr/src/app/
+
+COPY package.json yarn.lock nuxt.config.ts ./
+
+RUN yarn
+
+COPY src src
+RUN yarn build
+
+
+
+
+#############################################
+## RUN STEP
+#############################################
+FROM nginx:1.23-alpine AS runtime
 
 EXPOSE 80
 
-# Install node
 RUN apk add --no-cache --update \
-    nodejs=16.17.1-r0 \
-    npm=8.10.0-r0
+    nodejs=18.14.2-r0 \
+    npm=9.1.2-r0
 
 # Install and configure SSH
 EXPOSE 2222
@@ -29,29 +49,23 @@ RUN apk --update add --no-cache openssh bash \
     PermitRootLogin 	yes\n\
     " > /etc/ssh/sshd_config
 
+
+WORKDIR /usr/app
+
+COPY --from=build /usr/src/app/.output/ ./
+
 # Install PM 2, and fix permissions for dependency
-RUN npm install -g pm2
+RUN npm install -g pm2@5
 RUN pm2 install pm2-server-monit
-
-# Create app directory
-WORKDIR /usr/src/app/
-
-# Install application dependencies
-COPY src/package.json src/package-lock.json ./
-RUN npm ci
-
-# Copy and build application
-COPY src .
-RUN npm run build
 
 # Copy Nginx configuration
 COPY docker/nginx/ /etc/nginx/
 
 # Copy error pages
-COPY docker/static/ /usr/src/static/
+COPY docker/static/ /usr/app/static/
 
 # Copy entrypoint into working dir
-COPY docker/entrypoint.sh /usr/src/entrypoint.sh
+COPY docker/entrypoint.sh /usr/app/entrypoint.sh
 
 EXPOSE 80
 
@@ -59,4 +73,4 @@ ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=3000
 ENV NITRO_HOST=0.0.0.0
 ENV NITRO_PORT=3000
-ENTRYPOINT ["/bin/ash", "/usr/src/entrypoint.sh"]
+ENTRYPOINT ["/bin/ash", "/usr/app/entrypoint.sh"]
